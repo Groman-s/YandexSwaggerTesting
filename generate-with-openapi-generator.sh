@@ -1,0 +1,12 @@
+C:/Users/Roman/.jdks/corretto-17.0.9/bin/java -jar openapi-generator-cli-7.9.0.jar generate \
+-i https://petstore.swagger.io/v2/swagger.json \
+--api-package com.goyanov.yandex.swagger.openapi.testing.api \
+--model-package com.goyanov.yandex.swagger.openapi.testing.model \
+--invoker-package com.goyanov.yandex.swagger.openapi.testing.invoker \
+--group-id com.goyanov \
+--artifact-id openapi-generator-cli-7 \
+--artifact-version 1.0.0 \
+-g java \
+-p java8=true \
+--library resttemplate \
+-o spring-openapi-generator-api-client
