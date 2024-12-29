@@ -4,14 +4,12 @@ import com.goyanov.yandex.swagger.openapi.testing.api.PetApi;
 import com.goyanov.yandex.swagger.openapi.testing.model.Pet;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.client.HttpClientErrorException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-@AutoConfigureMockMvc
 public class PetPutTest
 {
     @Autowired
