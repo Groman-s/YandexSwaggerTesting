@@ -10,20 +10,27 @@ import org.springframework.web.client.HttpClientErrorException;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class StorePostTest
+public class StoreDeleteTest
 {
     @Autowired
     private StoreApi storeApi;
 
     @Test
-    public void postStoreOrder_Successful()
+    public void deleteStoreOrder_Successful()
     {
-        storeApi.placeOrder(new Order().id(3L).complete(true).quantity(5).petId(6L).status(Order.StatusEnum.PLACED));
+        storeApi.placeOrder(new Order().id(4L));
+        storeApi.deleteOrder(4L);
     }
 
     @Test
-    public void postStoreOrder_InvalidOrder()
+    public void deleteStoreOrder_InvalidId()
     {
-        assertThrows(HttpClientErrorException.class, () -> storeApi.placeOrder(null));
+        assertThrows(HttpClientErrorException.class, () -> storeApi.deleteOrder(null));
+    }
+
+    @Test
+    public void deleteStoreOrder_NotFound()
+    {
+        assertThrows(HttpClientErrorException.NotFound.class, () -> storeApi.deleteOrder(-1882L));
     }
 }
