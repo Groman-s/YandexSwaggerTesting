@@ -4,10 +4,12 @@ import com.goyanov.yandex.swagger.openapi.testing.model.Pet;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 
+@DisplayName("Post методы питомцев (RestAssured)")
 public class PetPostTest
 {
     @BeforeAll
@@ -17,6 +19,7 @@ public class PetPostTest
     }
 
     @Test
+    @DisplayName("Успешное добавление питомца")
     public void postPet_Successful()
     {
         given().
@@ -26,6 +29,7 @@ public class PetPostTest
     }
 
     @Test
+    @DisplayName("Возврат статуса 405 при попытке добавления невалидного питомца")
     public void postPet_InvalidInput()
     {
         given().
