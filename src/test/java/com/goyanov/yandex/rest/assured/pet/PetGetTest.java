@@ -26,6 +26,8 @@ public class PetGetTest
 
         RestAssured.get("/pet/500").then()
                 .body("id", equalTo(500))
+                .body("name", equalTo("Leika"))
+                .body("status", equalTo("sold"))
                 .statusCode(200);
     }
 
