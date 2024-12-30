@@ -1,4 +1,4 @@
-package com.goyanov.yandex.configuration;
+package com.goyanov.yandex.swagger.configuration;
 
 import com.goyanov.yandex.swagger.openapi.testing.api.PetApi;
 import com.goyanov.yandex.swagger.openapi.testing.invoker.ApiClient;

@@ -1,4 +1,4 @@
-package com.goyanov.yandex.user;
+package com.goyanov.yandex.swagger.user;
 
 import com.goyanov.yandex.swagger.openapi.testing.api.UserApi;
 import com.goyanov.yandex.swagger.openapi.testing.model.User;

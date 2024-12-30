@@ -1,4 +1,4 @@
-package com.goyanov.yandex.store;
+package com.goyanov.yandex.swagger.store;
 
 import com.goyanov.yandex.swagger.openapi.testing.api.StoreApi;
 import com.goyanov.yandex.swagger.openapi.testing.model.Order;
