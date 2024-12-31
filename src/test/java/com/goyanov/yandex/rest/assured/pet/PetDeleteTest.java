@@ -35,6 +35,6 @@ public class PetDeleteTest
     @DisplayName("Возврат статуса 400 при указании невалидного ID во время удаления")
     public void deletePet_InvalidId()
     {
-        RestAssured.delete("/pet/-hguyg7").then().statusCode(400);
+        RestAssured.delete("/pet/-42324e23qhguyg7").then().statusCode(400);
     }
 }

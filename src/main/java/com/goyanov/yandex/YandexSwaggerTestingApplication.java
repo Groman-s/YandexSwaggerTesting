@@ -1,4 +1,4 @@
-package com.goyanov.yandex.swagger;
+package com.goyanov.yandex;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
