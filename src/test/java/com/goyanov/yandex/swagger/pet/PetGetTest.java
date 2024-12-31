@@ -3,6 +3,8 @@ package com.goyanov.yandex.swagger.pet;
 import com.goyanov.yandex.swagger.openapi.testing.api.PetApi;
 import com.goyanov.yandex.swagger.openapi.testing.model.Pet;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.client.HttpClientErrorException;
@@ -35,17 +37,12 @@ class PetGetTest
         assertThrows(HttpClientErrorException.NotFound.class, () -> petApi.getPetById(0L));
     }
 
-    @Test
-    public void getPet_CheckSearchByStatusWorks()
+    @ParameterizedTest
+    @EnumSource(Pet.StatusEnum.class)
+    public void getPet_CheckSearchByStatusWorks(Pet.StatusEnum status)
     {
-        List<Pet> available = petApi.findPetsByStatus(List.of("available"));
-        assertTrue(available.stream().allMatch(pet -> pet.getStatus() == Pet.StatusEnum.AVAILABLE));
-
-        List<Pet> pending = petApi.findPetsByStatus(List.of("pending"));
-        assertTrue(pending.stream().allMatch(pet -> pet.getStatus() == Pet.StatusEnum.PENDING));
-
-        List<Pet> sold = petApi.findPetsByStatus(List.of("sold"));
-        assertTrue(sold.stream().allMatch(pet -> pet.getStatus() == Pet.StatusEnum.SOLD));
+        List<Pet> available = petApi.findPetsByStatus(List.of(status.getValue()));
+        assertTrue(available.stream().allMatch(pet -> pet.getStatus() == status));
     }
 
     @Test
