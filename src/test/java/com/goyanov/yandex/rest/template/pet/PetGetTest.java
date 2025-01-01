@@ -2,6 +2,7 @@ package com.goyanov.yandex.rest.template.pet;
 
 import com.goyanov.yandex.swagger.openapi.testing.model.Category;
 import com.goyanov.yandex.swagger.openapi.testing.model.Pet;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@DisplayName("Get методы питомцев (RestTemplate)")
 public class PetGetTest
 {
     @Autowired

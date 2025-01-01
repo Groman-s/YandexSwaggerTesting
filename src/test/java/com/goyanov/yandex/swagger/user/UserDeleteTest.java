@@ -2,6 +2,7 @@ package com.goyanov.yandex.swagger.user;
 
 import com.goyanov.yandex.swagger.openapi.testing.api.UserApi;
 import com.goyanov.yandex.swagger.openapi.testing.model.User;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,6 +11,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@DisplayName("Delete методы пользователей (Swagger)")
 public class UserDeleteTest
 {
     @Autowired

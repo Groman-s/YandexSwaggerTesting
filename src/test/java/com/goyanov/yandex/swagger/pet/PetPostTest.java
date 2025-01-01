@@ -4,56 +4,75 @@ import com.goyanov.yandex.swagger.openapi.testing.api.PetApi;
 import com.goyanov.yandex.swagger.openapi.testing.model.Category;
 import com.goyanov.yandex.swagger.openapi.testing.model.Pet;
 import com.goyanov.yandex.swagger.openapi.testing.model.Tag;
+import io.qameta.allure.Step;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class PetPostTest
+@DisplayName("Post методы питомцев (Swagger)")
+public class PetPostTest
 {
     @Autowired
     private PetApi petApi;
 
-    @Test
-    public void postPet_Successful1()
+    private static Stream<Pet> providedAddedPets()
+    {
+        return Stream.of
+        (
+            new Pet(),
+            new Pet().id(1L).name("Petty").category(new Category().id(1L)).status(Pet.StatusEnum.SOLD)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("providedAddedPets")
+    @DisplayName("Успешное добавление питомца")
+    public void postPet_Successful()
     {
         petApi.addPet(new Pet());
     }
 
     @Test
+    @DisplayName("Возврат статуса 400 при попытке добавления невалидных данных")
     public void postPet_InvalidInput()
     {
         assertThrows(HttpClientErrorException.class, () -> petApi.addPet(null));
     }
 
-    @Test
-    public void postPet_Successful2()
+    @Step("Шаг 1 (добавление питомца)")
+    private void addPet(Long petId)
     {
-        Pet pet = new Pet();
-        pet.setId(1L);
-        pet.setName("Petty");
-        pet.setCategory(new Category());
-        pet.setTags(List.of(new Tag()));
-        pet.setStatus(Pet.StatusEnum.SOLD);
-        pet.setPhotoUrls(List.of("petty.jpeg"));
+        petApi.addPet(new Pet().id(petId));
+    }
 
-        petApi.addPet(new Pet());
+    @Step("Шаг 2 (обновление питомца)")
+    public void updatePet(Long petId, String name, String status)
+    {
+        petApi.updatePetWithForm(petId, name, status);
     }
 
     @Test
-    public void postPet_SuccessfulInputUpdatingById()
+    @DisplayName("Успешное обновление существующего питомца")
+    public void postPetUpdateById_Successful()
     {
-        petApi.updatePetWithForm(500L, "Leika", "sold");
+        addPet(499L);
+        updatePet(499L, "Leika", "sold");
     }
 
     @Test
-    public void postPet_InvalidInputUpdatingById()
+    @DisplayName("Возврат статуса 405 при обновлении питомца с указанием невалидных данных")
+    public void postPetUpdateById_InvalidInput()
     {
-        assertThrows(HttpClientErrorException.class, () -> petApi.updatePetWithForm(0L, "hruk", "some-status"));
+        assertThrows(HttpClientErrorException.MethodNotAllowed.class, () -> petApi.updatePetWithForm(null, "hruk", "some-status"));
     }
 }

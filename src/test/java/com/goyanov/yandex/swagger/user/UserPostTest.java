@@ -2,6 +2,7 @@ package com.goyanov.yandex.swagger.user;
 
 import com.goyanov.yandex.swagger.openapi.testing.api.UserApi;
 import com.goyanov.yandex.swagger.openapi.testing.model.User;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,6 +12,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@DisplayName("Post методы пользователей (Swagger)")
 public class UserPostTest
 {
     @Autowired
