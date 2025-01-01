@@ -37,9 +37,9 @@ public class PetPostTest
     @ParameterizedTest
     @MethodSource("providedAddedPets")
     @DisplayName("Успешное добавление питомца")
-    public void postPet_Successful()
+    public void postPet_Successful(Pet pet)
     {
-        petApi.addPet(new Pet());
+        petApi.addPet(pet);
     }
 
     @Test

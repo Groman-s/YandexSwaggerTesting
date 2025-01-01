@@ -19,7 +19,8 @@ public class UserPostTest
     private UserApi userApi;
 
     @Test
-    public void userPost_SuccessfulCreating()
+    @DisplayName("Успешное создание нового пользователя")
+    public void userPost_Successful()
     {
         userApi.createUser(new User().
                 id(1L).username("user").
@@ -29,12 +30,14 @@ public class UserPostTest
     }
 
     @Test
+    @DisplayName("Успешное создание пользователей (массив)")
     public void userPost_SuccessfulCreatingWithArray()
     {
         userApi.createUsersWithArrayInput(List.of(new User().id(1L), new User().id(2L), new User().id(3L)));
     }
 
     @Test
+    @DisplayName("Успешное создание пользователей (список)")
     public void userPost_SuccessfulCreatingWithList()
     {
         userApi.createUsersWithListInput(List.of(new User().id(1L), new User().id(2L)));
