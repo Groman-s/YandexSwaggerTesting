@@ -18,12 +18,14 @@ public class StorePostTest
     private StoreApi storeApi;
 
     @Test
+    @DisplayName("Успешное добавление заказа")
     public void postStoreOrder_Successful()
     {
         storeApi.placeOrder(new Order().id(3L).complete(true).quantity(5).petId(6L).status(Order.StatusEnum.PLACED));
     }
 
     @Test
+    @DisplayName("Возврат статуса 400 при попытке добавления невалидного заказа")
     public void postStoreOrder_InvalidOrder()
     {
         assertThrows(HttpClientErrorException.class, () -> storeApi.placeOrder(null));

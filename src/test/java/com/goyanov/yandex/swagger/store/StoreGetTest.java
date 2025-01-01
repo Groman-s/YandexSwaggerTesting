@@ -2,6 +2,8 @@ package com.goyanov.yandex.swagger.store;
 
 import com.goyanov.yandex.swagger.openapi.testing.api.StoreApi;
 import com.goyanov.yandex.swagger.openapi.testing.model.Order;
+import com.goyanov.yandex.swagger.openapi.testing.model.Pet;
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,27 +20,43 @@ public class StoreGetTest
     private StoreApi storeApi;
 
     @Test
+    @DisplayName("Успешное получение инвентаря магазина")
     public void getStoreInventory_Successful()
     {
         storeApi.getInventory();
     }
 
-    @Test
-    public void getStoreOrder_Successful()
+    @Step("Шаг 1 (добавление заказа)")
+    private void addOrder(Long orderId)
     {
-        storeApi.placeOrder(new Order().id(3L).complete(true).quantity(5));
-        storeApi.getOrderById(3L);
+        storeApi.placeOrder(new Order().id(orderId).complete(true).quantity(5));
+    }
+
+    @Step("Шаг 2 (получение заказа)")
+    public Order getOrder(Long orderId)
+    {
+        return storeApi.getOrderById(orderId);
     }
 
     @Test
-    public void getStoreOrder_InvalidId()
+    @DisplayName("Успешное получение инвентаря магазина")
+    public void getStoreOrderById_Successful()
+    {
+        addOrder(3L);
+        assertEquals(3L, getOrder(3L).getId());
+    }
+
+    @Test
+    @DisplayName("Возврат статуса 400 при получении заказа с указанием невалидного ID")
+    public void getStoreOrderById_InvalidId()
     {
         assertThrows(HttpClientErrorException.class, () -> storeApi.getOrderById(null));
     }
 
     @Test
-    public void getStoreOrder_NotFound()
+    @DisplayName("Возврат статуса 404 при получении заказа с указанием не существующего ID")
+    public void getStoreOrderById_NotFound()
     {
-        assertThrows(HttpClientErrorException.NotFound.class, () -> storeApi.getOrderById(439L));
+        assertThrows(HttpClientErrorException.NotFound.class, () -> storeApi.getOrderById(431273019L));
     }
 }
