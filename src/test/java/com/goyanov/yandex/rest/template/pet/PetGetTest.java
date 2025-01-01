@@ -22,7 +22,8 @@ public class PetGetTest
     private final String BASE_URL = "https://petstore.swagger.io/v2";
 
     @Test
-    public void getPet_Successful()
+    @DisplayName("Успешное получение питомца по ID")
+    public void getPetById_Successful()
     {
         Pet pet = new Pet().id(500L).name("Leika").category(new Category().id(3L).name("Pes"));
         restTemplate.postForObject(BASE_URL + "/pet", pet, Pet.class);
@@ -34,7 +35,8 @@ public class PetGetTest
     }
 
     @Test
-    public void getPet_InvalidId()
+    @DisplayName("Возврат статуса 400 при получении питомца с указанием невалидного ID")
+    public void getPetById_InvalidId()
     {
         assertThrows(HttpClientErrorException.class, () ->
         {
@@ -43,7 +45,8 @@ public class PetGetTest
     }
 
     @Test
-    public void getPet_NotFound()
+    @DisplayName("Возврат статуса 404 при получении питомца с указанием не существующего ID")
+    public void getPetById_NotFound()
     {
         assertThrows(HttpClientErrorException.NotFound.class, () ->
         {
