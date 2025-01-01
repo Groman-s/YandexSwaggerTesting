@@ -19,7 +19,7 @@ public class PetGetTest
         RestAssured.baseURI = "https://petstore.swagger.io/v2";
     }
 
-    @Step("Шаг 1")
+    @Step("Шаг 1 (добавление питомца)")
     public void addPet(Long id)
     {
         RestAssured.given().
@@ -28,7 +28,7 @@ public class PetGetTest
                 post("/pet");
     }
 
-    @Step("Шаг 2")
+    @Step("Шаг 2 (получение питомца)")
     public void getPetWithStatus200(Long id)
     {
         RestAssured.get("/pet/" + id).then()

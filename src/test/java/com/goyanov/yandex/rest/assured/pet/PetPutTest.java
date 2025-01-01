@@ -1,15 +1,16 @@
 package com.goyanov.yandex.rest.assured.pet;
 
-import com.goyanov.yandex.swagger.openapi.testing.model.Category;
 import com.goyanov.yandex.swagger.openapi.testing.model.Pet;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static io.restassured.RestAssured.given;
 
@@ -22,39 +23,45 @@ public class PetPutTest
         RestAssured.baseURI = "https://petstore.swagger.io/v2";
     }
 
-    @Test
-    @DisplayName("Успешное обновление питомца (вариант 1)")
-    public void putPet_Successful1()
+    private static Stream<Object> responseBodiesForPut()
     {
-        given().contentType(ContentType.JSON).body(new Pet().id(4L)).post("/pets");
-
-        RestAssured.given().
-                contentType(ContentType.JSON).
-                body(new Pet().id(4L).name("Rechka")).
-                put("/pet").then().statusCode(200);
+        return Stream.of
+        (
+            new Pet().id(4L).name("Rechka"),
+            """
+                {
+                    "id": 4
+                }
+            """
+        );
     }
 
-    @Test
-    @DisplayName("Успешное обновление питомца (вариант 2)")
-    public void putPet_Successful2()
+    @Step("Шаг 1 (добавление питомца)")
+    public void addPetWithId4()
     {
-        given().contentType(ContentType.JSON).body(new Pet().id(300L)).post("/pets");
+        given().contentType(ContentType.JSON).body(new Pet().id(4L)).post("/pets");
+    }
 
-        String body =
-        """
-            {
-                "id": 300
-            }
-        """;
+    @Step("Шаг 2 (обновление питомца)")
+    public void putBodyWithId4(Object body)
+    {
         RestAssured.given().
                 contentType(ContentType.JSON).
                 body(body).
                 put("/pet").then().statusCode(200);
     }
 
+    @ParameterizedTest
+    @MethodSource("responseBodiesForPut")
+    @DisplayName("Успешное обновление питомца")
+    public void putPet_Successful(Object body)
+    {
+        addPetWithId4();
+        putBodyWithId4(body);
+    }
+
     @Test
     @DisplayName("Возврат статуса 404 при обновлении по не существующему ID")
-    @Severity(SeverityLevel.CRITICAL)
     public void putPet_NotFound()
     {
         RestAssured.given().
