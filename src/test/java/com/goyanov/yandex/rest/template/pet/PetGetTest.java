@@ -2,6 +2,9 @@ package com.goyanov.yandex.rest.template.pet;
 
 import com.goyanov.yandex.swagger.openapi.testing.model.Category;
 import com.goyanov.yandex.swagger.openapi.testing.model.Pet;
+import io.qameta.allure.Step;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -21,17 +25,28 @@ public class PetGetTest
 
     private final String BASE_URL = "https://petstore.swagger.io/v2";
 
+    @Step("Шаг 1 (добавление питомца)")
+    public void addPet(Long id)
+    {
+        restTemplate.postForObject(BASE_URL + "/pet", new Pet().id(id), Pet.class);
+    }
+
+    @Step("Шаг 2 (получение питомца)")
+    public void getPetWithStatus200(Long id)
+    {
+        ResponseEntity<Pet> response = restTemplate.getForEntity(BASE_URL + "/pet/" + id.intValue(), Pet.class);
+        assertEquals(200, response.getStatusCodeValue());
+        Pet pet = response.getBody();
+        assertNotNull(pet);
+        assertEquals(id, pet.getId());
+    }
+
     @Test
     @DisplayName("Успешное получение питомца по ID")
     public void getPetById_Successful()
     {
-        Pet pet = new Pet().id(500L).name("Leika").category(new Category().id(3L).name("Pes"));
-        restTemplate.postForObject(BASE_URL + "/pet", pet, Pet.class);
-        ResponseEntity<Pet> response = restTemplate.getForEntity(BASE_URL + "/pet/500", Pet.class);
-        assertEquals(200, response.getStatusCodeValue());
-        assertNotNull(pet);
-        assertEquals(500L, pet.getId());
-        assertEquals("Leika", pet.getName());
+        addPet(502L);
+        getPetWithStatus200(502L);
     }
 
     @Test
