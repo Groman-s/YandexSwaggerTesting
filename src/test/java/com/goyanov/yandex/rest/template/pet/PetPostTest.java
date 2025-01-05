@@ -14,13 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @DisplayName("Post методы питомцев (RestTemplate)")
-public class PetPostTest
+public class PetPostTest extends RestTemplateTest
 {
-    @Autowired
-    private RestTemplate restTemplate;
-
-    private final String BASE_URL = "https://petstore.swagger.io/v2";
-
     @Test
     @DisplayName("Успешное добавление питомца")
     public void postPet_Successful()

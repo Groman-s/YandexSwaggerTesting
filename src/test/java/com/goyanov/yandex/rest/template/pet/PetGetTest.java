@@ -1,30 +1,19 @@
 package com.goyanov.yandex.rest.template.pet;
 
-import com.goyanov.yandex.swagger.openapi.testing.model.Category;
 import com.goyanov.yandex.swagger.openapi.testing.model.Pet;
 import io.qameta.allure.Step;
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
 
-import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @DisplayName("Get методы питомцев (RestTemplate)")
-public class PetGetTest
+public class PetGetTest extends RestTemplateTest
 {
-    @Autowired
-    private RestTemplate restTemplate;
-
-    private final String BASE_URL = "https://petstore.swagger.io/v2";
-
     @Step("Шаг 1 (добавление питомца)")
     public void addPet(Long id)
     {
