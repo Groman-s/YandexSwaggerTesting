@@ -52,7 +52,7 @@ public class PetPostTest
     @Step("Шаг 1 (добавление питомца)")
     private void addPet(Long petId)
     {
-        petApi.addPet(new Pet().id(petId));
+        postPet_Successful(new Pet().id(petId));
     }
 
     @Step("Шаг 2 (обновление питомца)")
