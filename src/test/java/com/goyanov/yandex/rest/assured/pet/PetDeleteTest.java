@@ -4,19 +4,12 @@ import com.goyanov.yandex.swagger.openapi.testing.model.Pet;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("Delete методы питомцев (RestAssured)")
-public class PetDeleteTest
+public class PetDeleteTest extends AssuredTest
 {
-    @BeforeAll
-    public static void initPath()
-    {
-        RestAssured.baseURI = "https://petstore.swagger.io/v2";
-    }
-
     @Step("Шаг 1 (добавление питомца)")
     private void addPet(Long petId)
     {

@@ -4,21 +4,14 @@ import com.goyanov.yandex.swagger.openapi.testing.model.Pet;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.Matchers.equalTo;
 
 @DisplayName("Get методы питомцев (RestAssured)")
-public class PetGetTest
+public class PetGetTest extends AssuredTest
 {
-    @BeforeAll
-    public static void initPath()
-    {
-        RestAssured.baseURI = "https://petstore.swagger.io/v2";
-    }
-
     @Step("Шаг 1 (добавление питомца)")
     public void addPet(Long id)
     {

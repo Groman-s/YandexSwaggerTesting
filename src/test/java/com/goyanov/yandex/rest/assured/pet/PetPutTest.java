@@ -4,7 +4,6 @@ import com.goyanov.yandex.swagger.openapi.testing.model.Pet;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,14 +14,8 @@ import java.util.stream.Stream;
 import static io.restassured.RestAssured.given;
 
 @DisplayName("Put методы питомцев (RestAssured)")
-public class PetPutTest
+public class PetPutTest extends AssuredTest
 {
-    @BeforeAll
-    public static void initPath()
-    {
-        RestAssured.baseURI = "https://petstore.swagger.io/v2";
-    }
-
     private static Stream<Object> responseBodiesForPut()
     {
         return Stream.of

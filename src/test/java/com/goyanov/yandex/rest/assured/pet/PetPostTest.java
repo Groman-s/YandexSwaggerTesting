@@ -1,23 +1,15 @@
 package com.goyanov.yandex.rest.assured.pet;
 
 import com.goyanov.yandex.swagger.openapi.testing.model.Pet;
-import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 
 @DisplayName("Post методы питомцев (RestAssured)")
-public class PetPostTest
+public class PetPostTest extends AssuredTest
 {
-    @BeforeAll
-    public static void initPath()
-    {
-        RestAssured.baseURI = "https://petstore.swagger.io/v2";
-    }
-
     @Test
     @DisplayName("Успешное добавление питомца")
     public void postPet_Successful()
