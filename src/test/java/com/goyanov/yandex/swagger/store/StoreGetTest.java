@@ -6,6 +6,8 @@ import com.goyanov.yandex.swagger.openapi.testing.model.Pet;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.client.HttpClientErrorException;
@@ -46,11 +48,12 @@ public class StoreGetTest
         assertEquals(3L, getOrder(3L).getId());
     }
 
-    @Test
+    @ParameterizedTest
+    @ValueSource(longs = {-3, 0, 11, 20, 60})
     @DisplayName("Возврат статуса 400 при получении заказа с указанием невалидного ID")
-    public void getStoreOrderById_InvalidId()
+    public void getStoreOrderById_InvalidId(Long id)
     {
-        assertThrows(HttpClientErrorException.class, () -> storeApi.getOrderById(null));
+        assertThrows(HttpClientErrorException.class, () -> storeApi.getOrderById(id));
     }
 
     @Test
