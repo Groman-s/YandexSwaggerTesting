@@ -7,11 +7,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -63,6 +66,16 @@ public class PetGetTest
     {
         List<Pet> available = petApi.findPetsByStatus(List.of(status.getValue()));
         assertTrue(available.stream().allMatch(pet -> pet.getStatus() == status));
+    }
+
+    @Test
+    @DisplayName("Успешное получение питомцев по указанным статусам")
+    public void getPetByMultipleStatuses_Successful()
+    {
+        List<Pet> available = petApi.findPetsByStatus(
+                List.of(Pet.StatusEnum.AVAILABLE.getValue(), Pet.StatusEnum.SOLD.getValue())
+        );
+        assertTrue(available.stream().noneMatch(pet -> pet.getStatus() == Pet.StatusEnum.PENDING));
     }
 
     @Test
