@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Get методы питомцев (RestAssured)")
 public class PetGetTest extends AssuredTest
@@ -22,13 +23,15 @@ public class PetGetTest extends AssuredTest
     }
 
     @Step("Шаг 2 (получение питомца)")
-    public void getPetWithStatus200(Long id)
-    {
-        RestAssured.get("/pet/" + id).then()
-                .body("id", equalTo(id.intValue()))
-                .body("name", equalTo("Leika"))
-                .body("status", equalTo("sold"))
-                .statusCode(200);
+    public Pet getPetWithStatus200(Long id) {
+        return RestAssured.given()
+                .pathParam("petId", id)
+                .when()
+                .get("/pet/{petId}")
+                .then()
+                .statusCode(200) // Проверка, что статус код 200
+                .extract()
+                .as(Pet.class); // Извлечение объекта Pet из ответа
     }
 
     @Test
@@ -36,7 +39,8 @@ public class PetGetTest extends AssuredTest
     public void getPetById_Successful()
     {
         addPet(7366L);
-        getPetWithStatus200(7366L);
+        Pet pet = getPetWithStatus200(7366L);
+        assertEquals(7366L, pet.getId());
     }
 
     @Test

@@ -21,13 +21,12 @@ public class PetGetTest extends RestTemplateTest
     }
 
     @Step("Шаг 2 (получение питомца)")
-    public void getPetWithStatus200(Long id)
+    public Pet getPetWithStatus200(Long id)
     {
         ResponseEntity<Pet> response = restTemplate.getForEntity(BASE_URL + "/pet/" + id.intValue(), Pet.class);
         assertEquals(200, response.getStatusCodeValue());
         Pet pet = response.getBody();
-        assertNotNull(pet);
-        assertEquals(id, pet.getId());
+        return pet;
     }
 
     @Test
@@ -35,7 +34,9 @@ public class PetGetTest extends RestTemplateTest
     public void getPetById_Successful()
     {
         addPet(502L);
-        getPetWithStatus200(502L);
+        Pet pet = getPetWithStatus200(502L);
+        assertNotNull(pet);
+        assertEquals(502L, pet.getId());
     }
 
     @Test
