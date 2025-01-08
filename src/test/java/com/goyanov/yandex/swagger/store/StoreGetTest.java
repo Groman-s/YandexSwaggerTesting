@@ -40,12 +40,13 @@ public class StoreGetTest
         return storeApi.getOrderById(orderId);
     }
 
-    @Test
+    @ParameterizedTest
+    @ValueSource(longs = {1,3,5,6,9,10})
     @DisplayName("Успешное получение инвентаря магазина")
-    public void getStoreOrderById_Successful()
+    public void getStoreOrderById_Successful(Long orderId)
     {
-        addOrder(3L);
-        assertEquals(3L, getOrder(3L).getId());
+        addOrder(orderId);
+        assertEquals(orderId, getOrder(orderId).getId());
     }
 
     @ParameterizedTest
