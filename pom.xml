@@ -32,9 +32,8 @@
 
     <repositories>
         <repository>
-            <id>local-repo</id>
-            <name>Local Repository</name>
-            <url>file://${project.basedir}/openapi-generator-cli-7</url>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
         </repository>
     </repositories>
 
@@ -82,9 +81,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.goyanov</groupId>
-            <artifactId>openapi-generator-cli-7</artifactId>
-            <version>1.1</version>
+            <groupId>com.github.Groman-s</groupId>
+            <artifactId>Swagger-Petstore-API</artifactId>
+            <version>v1.3</version>
         </dependency>
 
         <!-- Allure -->
