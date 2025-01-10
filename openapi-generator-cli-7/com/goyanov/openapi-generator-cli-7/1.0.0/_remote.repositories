@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Sat Dec 28 22:12:38 MSK 2024
+openapi-generator-cli-7-1.0.0-javadoc.jar>=
+openapi-generator-cli-7-1.0.0-sources.jar>=
+openapi-generator-cli-7-1.0.0-tests.jar>=
+openapi-generator-cli-7-1.0.0.jar>=
+openapi-generator-cli-7-1.0.0.pom>=
